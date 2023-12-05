@@ -1,7 +1,8 @@
 class Solution:
     def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
-        if start > destination:
+        if start>destination:
             start, destination = destination, start
-        ans = sum(distance[start:destination])
-        ans2 = sum(distance) - ans
-        return min(ans, ans2)
+        distance1 = sum(distance[start:destination])
+        distance2 = sum(distance)-distance1
+        # print(ans)
+        return min(distance1,distance2)
