@@ -1,17 +1,16 @@
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
         n = 0
-        for _,_,i in trips:
-            n = max(n,i)
-        passenger_no = [0]*(n+2)
-        print(n)
-        for passengers,start,end in trips:
-            if passengers>capacity:
+        for _,_,size in trips:
+            n = max(size,n)
+        car = [0]*(n+1)
+        for ppl,start,end in trips:
+            if ppl>capacity:
                 return False
-            passenger_no[start]+=passengers
-            passenger_no[end]-=passengers
+            car[start] +=ppl
+            car[end] -=ppl
         for i in range(1,n+1):
-            passenger_no[i]+=passenger_no[i-1]
-            if passenger_no[i]>capacity:
+            car[i]+=car[i-1]
+            if car[i]>capacity:
                 return False
         return True
