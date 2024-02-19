@@ -1,24 +1,43 @@
 class Solution:
     def balancedString(self, s: str) -> int:
-        counter = collections.Counter(s)
-        n = len(s) // 4
-        extras = {}
-        for key in counter:
-            if counter[key] > n:
-                extras[key] = counter[key] - n
-        
-        if not extras: return 0
-        i = 0
-        res = len(s)
-        for j in range(len(s)):
-            if s[j] in extras:
-                extras[s[j]] -= 1
+        "QWER"
+        def idx (key):
+            if key == "Q":
+                return 0
+            if key == "W":
+                return 1
+            if key == "E":
+                return 2    
+            if key == "R":
+                return 3
+
+        count = Counter(s)
+        k = len(s)//4
+        extras = [0,0,0,0]
+        extra_letters = set()
+        for key,val in count.items():
+            if val>k:
+                extra_letters.add(key)
+                extras[idx(key)] = val-k
             
-            while max(extras.values()) <= 0:
-                res = min(res, j-i+1)
-                if s[i] in extras:
-                    extras[s[i]] += 1
-                i += 1
-                
-                
-        return res
+        if all(val==0 for val in extras):
+            return 0
+        
+        l = 0
+        ans = float("inf")
+        size = 0
+
+        for r in range(len(s)):
+            if s[r] in extra_letters:
+                extras[idx(s[r])]-=1
+            
+            while l<=r and all(val<=0 for val in extras):
+                ans = min(ans,r-l+1)
+                if s[l] in extra_letters:
+                    extras[idx(s[l])]+=1
+                l+=1
+
+
+        print(count)
+        return ans
+        
