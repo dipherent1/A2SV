@@ -1,16 +1,17 @@
 class Solution:
     def longestNiceSubstring(self, s: str) -> str:
-        def isvalid(check):
-            # check = set(words)
-            return all(ch.upper() in check and ch.lower() in check for ch in check)
+        if len(s)<2:
+            return ""
         
-        ans = ""
-        for i in range(len(s)):
-            for j in range(i+1,len(s)):
-       
-                if isvalid(set(s[i:j+1])):
-       
-                    if j-i+1 > len(ans):
-                        ans = s[i:j+1]
-       
-        return ans
+        isvalid = True
+        for i, c in enumerate(s):
+            if c.swapcase() not in s:
+                isvalid = False
+                break
+            
+        if isvalid:
+            return s
+        else:
+            s1 = self.longestNiceSubstring(s[:i])
+            s2 = self.longestNiceSubstring(s[i+1:])
+            return max(s1,s2,key = len)
